@@ -10,15 +10,12 @@ services:
     ports:
       - 8000:80
     environment:
-      - APP_ENV=local
-      - APP_DEBUG=true
-      - APP_KEY=base64:++68j+4Gr0+ItQqUoZwUT0C/QfZPbY2l2Hzb+5K4/FA=
-      - DB_CONNECTION=pgsql
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_DATABASE=laravel
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=secret
+      - DB_CONNECTION=mysql
+      - DB_HOST=db # Ensure this matches the db service name (db in your case)
+      - DB_PORT=3306
+      - DB_DATABASE=news_aggregator
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
     volumes:
       - .:/var/www/html
     depends_on:
@@ -31,8 +28,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: news_aggregator
-      MYSQL_USER: user
-      MYSQL_PASSWORD: userpassword
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     ports:
       - 3306:3306
     volumes:
