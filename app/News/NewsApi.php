@@ -72,6 +72,7 @@ class NewsApi extends NewsAbstract
             },
             'published_at' => 'publishedAt',
             'category' => 'category',
+            'author' => 'author',
         ];
     }
 }
