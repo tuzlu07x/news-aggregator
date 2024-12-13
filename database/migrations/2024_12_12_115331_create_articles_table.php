@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->text('content')->nullable();
-            $table->tinyInteger('category');
+            $table->string('category');
+            $table->string('author')->nullable();
             $table->string('source');
             $table->timestamp('published_at');
             $table->timestamps();

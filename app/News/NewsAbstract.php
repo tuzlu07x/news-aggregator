@@ -9,6 +9,7 @@ abstract class NewsAbstract
 {
     use ClientTrait;
     abstract public function getNews(int $limit, int $page): array;
+    abstract protected static function resKeys(): array;
 
     public function formatNews(array $keys, array $news): array
     {
@@ -16,9 +17,9 @@ abstract class NewsAbstract
             'title' => $news[$keys['title']],
             'content' => $news[$keys['content']],
             'source' => is_callable($keys['source']) ? $keys['source']($news) : $news[$keys['source']],
-            'published_at' => Carbon::parse($news['publishedAt'])->format('Y-m-d H:i:s'),
+            'published_at' => Carbon::parse($news[$keys['published_at']])->format('Y-m-d H:i:s'),
             'category' => $news[$keys['category']],
-            'author' => $news['author'],
+            'author' => is_callable($keys['author']) ? $keys['author']($news) : $news[$keys['author']],
         ];
     }
 }

@@ -23,12 +23,6 @@ class NewsApi extends NewsAbstract
         return $this;
     }
 
-
-    private function stringToIntOfCategory(): int
-    {
-        return ArticleCategoryEnum::stringToInt($this->category);
-    }
-
     public function setFrom(string $from): self
     {
         $this->from = $from;
@@ -50,7 +44,7 @@ class NewsApi extends NewsAbstract
                 'total_results' => $articles['totalResults'] ?? 1,
                 'news' => array_map(fn($article) => $this->formatNews(
                     $this->resKeys(),
-                    array_merge($article, ['category' => $this->stringToIntOfCategory()])
+                    array_merge($article, ['category' => $this->category])
                 ), $articles['articles']),
             ];
             return $data;
@@ -62,7 +56,7 @@ class NewsApi extends NewsAbstract
         }
     }
 
-    private static function resKeys(): array
+    protected static function resKeys(): array
     {
         return [
             'title' => 'title',
