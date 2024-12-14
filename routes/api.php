@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserPreferenceController;
 use Illuminate\Http\Request;
@@ -11,4 +12,5 @@ Route::post('login', [UserAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [UserAuthController::class, 'logout']);
     Route::apiResource('preference', UserPreferenceController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::get('recommendations', [RecommendationController::class, 'index']);
 });
