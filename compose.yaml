@@ -16,13 +16,13 @@ services:
       - DB_DATABASE=news_aggregator
       - DB_USERNAME=root
       - DB_PASSWORD=root
-      - MEILISEARCH_HOST=http://meilisearch:7700 # Meilisearch host bilgisi
+      - MEILISEARCH_HOST=http://meilisearch:7700
     volumes:
       - .:/var/www/html
     depends_on:
       - db
       - redis
-      - meilisearch # Meilisearch servisine bağımlılık ekleniyor
+      - meilisearch
 
   db:
     image: mysql:8.0
