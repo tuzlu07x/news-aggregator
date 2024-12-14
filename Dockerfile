@@ -1,4 +1,3 @@
-# Stage 2: Build the final image
 FROM php:8.3-apache
 
 # Install required PHP extensions and dependencies
@@ -10,9 +9,10 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     && docker-php-ext-install pdo_pgsql zip \
     && pecl install redis \
-    && docker-php-ext-enable redis
-
-RUN docker-php-ext-install pdo pdo_mysql
+    && docker-php-ext-enable redis \
+    && apt-get install -y libssl-dev \
+    && docker-php-ext-install sockets \ 
+    && docker-php-ext-install pdo pdo_mysql
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
