@@ -18,7 +18,7 @@ abstract class NewsAbstract
             'content' => $news[$keys['content']],
             'source' => is_callable($keys['source']) ? $keys['source']($news) : $news[$keys['source']],
             'published_at' => Carbon::parse($news[$keys['published_at']])->format('Y-m-d H:i:s'),
-            'category' => $news[$keys['category']],
+            'category' => $news[$keys['category']] ?? 'unknown',
             'author' => is_callable($keys['author']) ? $keys['author']($news) : $news[$keys['author']],
         ];
     }

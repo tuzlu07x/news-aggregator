@@ -26,7 +26,6 @@ class WorldNewsApi extends NewsAbstract
         try {
             $response = $this->worldNewsApiClient();
             $articles = $response->get('top-news?language=en&source-country=' . $this->country . '&date=' . $this->date);
-            dd($articles);
             if (!isset($articles['top_news'])) return [];
             $articles = array_reduce($articles['top_news'], function ($carry, $item) {
                 return isset($item['news']) ? array_merge($carry, $item['news']) : $carry;
