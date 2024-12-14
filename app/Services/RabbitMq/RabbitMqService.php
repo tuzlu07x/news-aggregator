@@ -8,28 +8,44 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class RabbitMqService
 {
-    private AMQPStreamConnection $connection;
-    private AMQPChannel $channel;
+    private ?AMQPStreamConnection $connection = null;
+    private ?AMQPChannel $channel = null;
 
     public function __construct()
     {
+        $this->reconnect();
+    }
 
+    public function reconnect()
+    {
+        $this->closeConnection();
         $this->connection = new AMQPStreamConnection(
             config('rabbitmq.host'),
             config('rabbitmq.port'),
             config('rabbitmq.user'),
             config('rabbitmq.password'),
             config('rabbitmq.vhost'),
+            false,
+            'AMQPLAIN',
+            null,
+            'en_US',
+            10.0,
+            10.0,
+            null,
+            true,
+            60
         );
         $this->channel = $this->connection->channel();
     }
 
-    public function publishMessage(string $queueName, string $message): void
+    private function closeConnection()
     {
-        $this->channel->queue_declare($queueName, false, true, false, false);
-
-        $msg = new AMQPMessage($message, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT]);
-        $this->channel->basic_publish($msg, '', $queueName);
+        if ($this->channel && $this->channel->is_open()) {
+            $this->channel->close();
+        }
+        if ($this->connection) {
+            $this->connection->close();
+        }
     }
 
     public function consumeMessages(string $queueName, callable $callback): void
@@ -42,9 +58,19 @@ class RabbitMqService
         }
     }
 
+    public function publishMessage(string $queueName, string $message): void
+    {
+        if (!$this->connection || !$this->channel) {
+            $this->reconnect();
+        }
+
+        $this->channel->queue_declare($queueName, false, true, false, false);
+        $msg = new AMQPMessage($message, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT]);
+        $this->channel->basic_publish($msg, '', $queueName);
+    }
+
     public function __destruct()
     {
-        $this->channel->close();
-        $this->connection->close();
+        $this->closeConnection();
     }
 }
