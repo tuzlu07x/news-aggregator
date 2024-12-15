@@ -189,3 +189,11 @@ curl --location 'http://127.0.0.1:7700/indexes/articles/search \
 --header 'Accept: application/json' \
 --header 'Authorization: ••••••'```
 ````
+
+# Test
+
+For Testing I prepared with `PEST Framework` you can find them on `/test/Feature` and `/test/Unit` path
+
+```bash
+php artisan test
+```
