@@ -1,22 +1,78 @@
-### Building and running your application
+# Laravel Application with Docker
 
-When you're ready, start your application by running:
-`docker compose up --build`.
+This project is a Laravel application containerized using Docker. It includes services for PHP, MySQL, Redis, Meilisearch, RabbitMQ, and PhpMyAdmin, all integrated for seamless development.
 
-Your application will be available at http://localhost:8000.
+## Building and Running Your Application
 
-### PHP extensions
-If your application requires specific PHP extensions to run, they will need to be added to the Dockerfile. Follow the instructions and example in the Dockerfile to add them.
+To build and start your application, run the following command:
 
-### Deploying your application to the cloud
+```bash
+docker compose up --build
+```
 
-First, build your image, e.g.: `docker build -t myapp .`.
-If your cloud uses a different CPU architecture than your development
-machine (e.g., you are on a Mac M1 and your cloud provider is amd64),
-you'll want to build the image for that platform, e.g.:
-`docker build --platform=linux/amd64 -t myapp .`.
+This will:
 
-Then, push it to your registry, e.g. `docker push myregistry.com/myapp`.
+1. Build the Docker images specified in the `compose.yaml` file.
+2. Start the services (Laravel app, MySQL, Redis, Meilisearch, RabbitMQ, PhpMyAdmin).
+   After running the above command, your application will be accessible at:
 
-Consult Docker's [getting started](https://docs.docker.com/go/get-started-sharing/)
-docs for more detail on building and pushing.
+[a link](http://localhost:8000)
+
+## Services Overview
+
+1. `app` (Laravel PHP Application)
+   This service runs the Laravel application using Apache and `PHP 8.3`. It includes the necessary PHP extensions like `pdo_pgsql`, `zip`, `pdo_mysql`, and `Redis`.
+
+-   Ports: Exposes port 80 on the container, mapped to port `8000` on your local machine.
+-   Environment Variables: The service is configured to connect to the `db`, `redis`, and `meilisearch` services.
+
+2. `db` (MySQL Database)
+   This service uses `MySQL 8.0` for the database.
+
+-   Ports: Exposes `port 3306` for database connections.
+-   Environment Variables: Configures the MySQL root password and creates a database called `news_aggregator`.
+
+3. `phpmyadmin` (PhpMyAdmin)
+   This service allows you to manage your MySQL database through a web interface.
+
+-   Ports: Exposes port 8080 for `PhpMyAdmin`.
+-   Environment Variables: Configured to connect to the `db` service.
+
+4. `redis` (Redis Cache)
+   This service runs `Redis`, used for `caching` and session management.
+
+Ports: Exposes port `6379`.
+
+5. `meilisearch` (MeiliSearch)
+   This service runs MeiliSearch, a fast search engine that integrates with your Laravel application.
+
+Ports: Exposes port `7700`.
+
+6. `rabbitmq` (RabbitMQ)
+   This service runs RabbitMQ for message queuing and pub/sub functionality.
+
+Ports: Exposes ports `5672` for RabbitMQ messaging and `15672` for the RabbitMQ management interface.
+Environment Variables: Configured with default user `guest` and password `guest`.
+
+## PHP Extensions
+
+The following PHP extensions are included in the Dockerfile for your Laravel application:
+
+`pdo_pgsql`: Required for PostgreSQL database connections.
+`zip`: For working with zip files.
+`pdo_mysql`: For MySQL database connections.
+`redis`: For Redis caching.
+`sockets`: For socket support in PHP.
+If your application requires additional extensions, you can add them to the Dockerfile under the `docker-php-ext-install` command.
+
+## Environment Variables
+
+You can configure the environment variables in the app service section of docker-compose.yml for database, cache, and search service connections.
+
+`DB_CONNECTION`: Set to mysql for MySQL.
+`DB_HOST`: Set to db, pointing to the MySQL service.
+`DB_PORT`: Set to 3306 for MySQL.
+`DB_DATABASE`: The name of your database, e.g., news_aggregator.
+`DB_USERNAME`: MySQL user, set to root.
+`DB_PASSWORD`: MySQL password, set to root.
+`MEILISEARCH_HOST`: URL for the MeiliSearch service, e.g., http://meilisearch:7700.

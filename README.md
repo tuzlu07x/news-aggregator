@@ -1,66 +1,179 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# News Aggregator Task Case
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Requirements
 
-## About Laravel
+Before starting, ensure you have the following installed on your system:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+`PHP`: Version 8.3
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+`Laravel`: Version 11
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+`Composer`: Latest version
 
-## Learning Laravel
+`Docker`: For containerized environment setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. First off all Let's `clone` the project
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone git@github.com:tuzlu07x/news-aggregator.git
+```
 
-## Laravel Sponsors
+2. Run below command after open the project on editor
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+composer install
+```
 
-### Premium Partners
+3. Copy the `/.env.example` file and change with `.env`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+-   For Macos or Linux
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   For Windows
 
-## Code of Conduct
+```bash
+Copy-Item .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ENV
 
-## Security Vulnerabilities
+`.env`: now set your API Keys as a below
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+`NEWS_API_KEY`=[news_api_key](https://newsapi.org/) <br>
+`WORLD_NEWS_API_KEY`= [world_news](https://worldnewsapi.com/) <br>
+`NY_TIMES_API_KEY`= [new_york_times](https://developer.nytimes.com/get-started)
 
-## License
+`MEILISEARCH_KEY`=masterKey
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## POSTMAN
+
+You can visit `Postman` endpoint and can visit `Swagger` Document below links <br>
+
+[Link of Postman Enpoints](https://dark-station-425448.postman.co/workspace/News-Aggregator~1b19db34-ac72-4f12-aa8f-21ff162b9d4a/collection/20110215-cb8c5ca0-5704-456d-8e01-0f601c36e041?action=share&creator=20110215)
+
+[Swagger API Document](https://app.swaggerhub.com/apis/FATIHTUZLU07/news-task/1.0.0)
+
+## Docker
+
+Visit Docker readme file and act like there
+
+`/README.Docker.md`
+
+### Docker Run Command
+
+You can find everything about docker In `README.Docker.md` file if you did not visit there yet please before starting visit there
+
+To build and start your application, run the following command:
+
+```bash
+docker compose up --build
+```
+
+## MySQL
+
+Please Migrate all migrations to database
+
+```bash
+php artisan migrate --seed
+```
+
+## News Commands
+
+If everything OK we can countunie run commands which are news aggregator. Also you can visit `app/Console/Kernel.php` to see them
+
+1. firstly, run `queue` command
+
+```bash
+php artisan queue:work
+```
+
+2. Run `newsApi` command
+
+-`info`: If you use free plan newsApi allows you just `100` request that's why I developed its job according to it.
+
+```bash
+php artisan get:newsApi
+```
+
+3. Run `nyTimesNewsApi` command
+
+```bash
+php artisan get:nyTimesNewsApi
+```
+
+4. Run `worldNewsApi` command
+
+-`info` I haven't seen any pagination for this configuration that's why I haven't set its pagination in job and I got daily record.
+
+```bash
+php artisan get:worldNewsApi
+```
+
+You can find their `configuration` files on `app/News` path
+
+## Recommendation
+
+For Recommendation I decided to use `RabbitMQ` and used `pub/sub pattern` for this
+
+-   You can find consumer, publisher and management service inside `app/Services/Rabbitmq` path
+
+### Command
+
+Please make sure to check `php artisan migrate --seed` and make sure yourself to run `articles` commands before run below command
+
+-   this command will set that user recommend news acording to user preference
+
+```bash
+php artisan start:rabbitMqPublisherAndConsumer
+```
+
+-   After that run below command
+
+```bash
+php artisan queue:work
+```
+
+## Filtering
+
+1. For filtering I have decided to use `Meilisearch` and before check the endpoind of the `meilisearch` you have to run these commands
+
+```bash
+php artisan scout:import "App\Models\Article"
+php artisan scout:index "App\Models\Article"
+php artisan scout:sync-index-settings
+
+```
+
+2. And Finaly run
+
+```bash
+php artisan queue:work
+```
+
+3. After run these commands you can visit the `http://localhost:7700/` address to se all articles which is indexed
+
+4. Now You can visit `POSTMAN` link to request. The path `News/News Aggregator/Article/Searh`
+
+I set them for searching
+
+```php
+<?php
+namespace App\Models;
+
+'title' => $this->title,
+'content' => $this->content,
+'category' => $this->category,
+'source' => $this->source,
+'published_at' => $this->published_at,
+```
+
+5. Also Parameters Example as below. In `filter` parameter you can add `published_at, title and content` too. You can also use `q=` parameter
+
+```bash
+http://127.0.0.1:7700/indexes/articles/search?q=*&filter=(category='technology' OR source='Forbes')
+```
