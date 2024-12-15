@@ -37,9 +37,10 @@ class ArticleController extends Controller
         return ArticleResource::make($article);
     }
 
-    public function destroy(Article $article): ArticleResource
+    public function destroy(Article $article): \Illuminate\Http\JsonResponse
     {
-        $article = $this->articleService->delete($article);
-        return ArticleResource::make($article);
+        $isDeleted = $this->articleService->delete($article);
+        if ($isDeleted) return response()->json(['message' => 'Article deleted successfully'], 200);
+        return response()->json(['message' => 'Article not found'], 404);
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
-    use Searchable;
+    use Searchable, HasFactory;
 
     protected $fillable = ['title', 'content', 'category', 'source', 'published_at',];
 

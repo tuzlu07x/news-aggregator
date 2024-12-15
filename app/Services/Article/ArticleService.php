@@ -29,6 +29,8 @@ class ArticleService implements ArticleServiceImpl
     }
     public function delete(Article $article): bool
     {
-        return $this->repository->delete($article->id);
+        $article = $this->repository->delete($article->id);
+        if ($article) return true;
+        return false;
     }
 }
