@@ -138,6 +138,14 @@ php artisan start:rabbitMqPublisherAndConsumer
 php artisan queue:work
 ```
 
+-   Now You can visit `POSTMAN` and request the `News Aggregator/Recommendation/Recommend` path
+
+```bash
+curl --location 'http://localhost:8000/api/recommendations?page=1' \
+--header 'Accept: application/json' \
+--header 'Authorization: ••••••' \
+```
+
 ## Filtering
 
 1. For filtering I have decided to use `Meilisearch` and before check the endpoind of the `meilisearch` you have to run these commands
@@ -174,6 +182,10 @@ namespace App\Models;
 
 5. Also Parameters Example as below. In `filter` parameter you can add `published_at, title and content` too. You can also use `q=` parameter
 
-```bash
-http://127.0.0.1:7700/indexes/articles/search?q=*&filter=(category='technology' OR source='Forbes')
-```
+````bash
+curl --location 'http://127.0.0.1:7700/indexes/articles/search \
+--params 'q=*'
+--params 'filter=(category='technology' OR source='Forbes')'
+--header 'Accept: application/json' \
+--header 'Authorization: ••••••'```
+````
