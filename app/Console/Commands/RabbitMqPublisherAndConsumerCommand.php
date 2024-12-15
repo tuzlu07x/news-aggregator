@@ -15,7 +15,7 @@ class RabbitMqPublisherAndConsumerCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rabbitMQ:publisher';
+    protected $signature = 'start:rabbitMqPublisherAndConsumer';
 
     /**
      * The console command description.
