@@ -1,5 +1,46 @@
 # News Aggregator Task Case
 
+## Summary
+
+The News Aggregator project is a Laravel-based application designed to fetch, process, and recommend news articles from various APIs like NewsAPI, World News API, and New York Times API. It leverages modern technologies and best practices, including dependency injection, microservice patterns, and containerized development environments.
+
+### Key Features:
+
+1. News Fetching & Aggregation:
+
+-   Fetches news articles from multiple APIs, each with its unique command for execution.
+-   Implements rate-limiting and pagination where supported, ensuring optimal API usage.
+
+2. Recommendation System:
+
+-   Uses RabbitMQ with a pub/sub pattern to recommend articles to users based on their preferences.
+-   Ensures efficient message processing with a queue worker system.
+
+3. Search and Filtering:
+
+-   Integrated Meilisearch for fast and intuitive search functionality.
+-   Articles can be filtered by categories, sources, titles, content, and publication date.
+
+4. Containerization:
+
+-   Utilizes Docker for environment setup and management.
+-   Ensures the project can run consistently across different systems.
+
+5. Database Management:
+
+-   MySQL is used as the primary database.
+-   Supports database migrations and seeding to prepopulate data.
+
+6. Background Jobs:
+
+-   Redis is employed for queue management.
+-   Background processes like fetching news and processing recommendations are run using Laravel’s queue system.
+
+7. API Documentation & Testing:
+
+-   API endpoints are documented with Swagger and can be tested with Postman collections.
+-   Uses PEST Framework for feature and unit tests to ensure code reliability.
+
 ## Requirements
 
 Before starting, ensure you have the following installed on your system:
